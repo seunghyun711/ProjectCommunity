@@ -37,9 +37,7 @@ public class MemberService {
 
     // 회원 아이디로 불러오기
     public Member memberName(String name) {
-        Member res = memberRepository.findByName(name).get();
-        System.out.println(res.getName());
-        return res;
+        return memberRepository.findByName(name).get();
  //       return memberRepository.findByName(name).get();
     }
 

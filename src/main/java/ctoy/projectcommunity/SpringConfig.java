@@ -1,5 +1,6 @@
 package ctoy.projectcommunity;
 
+import ctoy.projectcommunity.repository.JpaMemberRepository;
 import ctoy.projectcommunity.repository.MemberRepository;
 import ctoy.projectcommunity.service.MemberService;
 import org.springframework.context.annotation.Bean;
@@ -22,7 +23,6 @@ public class SpringConfig {
     }
     @Bean
     public MemberRepository memberRepository() {
-        // return new JpaMemberRepository(em);
-        return null;
+        return new JpaMemberRepository(em);
     }
 }
