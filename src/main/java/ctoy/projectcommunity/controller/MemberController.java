@@ -47,7 +47,6 @@ public class MemberController {
     @PostMapping(value = "/project/tryLogin")
     public String tryLogin(Member member) {
         Member tmp = memberService.memberName(member.getName());
-        System.out.println(tmp.getName());
         if(tmp == null) {
             return "redirect:/project/login";
         }
