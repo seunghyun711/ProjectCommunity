@@ -4,10 +4,13 @@ import ctoy.projectcommunity.domain.Member;
 import ctoy.projectcommunity.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
-@Service
+
+@Transactional
 public class MemberService {
 
     @Autowired
@@ -32,8 +35,16 @@ public class MemberService {
         return memberRepository.findById(id).get();
     }
 
-    // 회원 삭제
-    public void memberDelete(Long id){
-        memberRepository.deleteById(id);
+    // 회원 아이디로 불러오기
+    public Member memberName(String name) {
+        Member res = memberRepository.findByName(name).get();
+        System.out.println(res.getName());
+        return res;
+ //       return memberRepository.findByName(name).get();
     }
+
+    // 회원 삭제
+//    public void memberDelete(Long id){
+//        memberRepository.deleteById(id);
+ //   }
 }
