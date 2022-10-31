@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.Optional;
 
 @Controller
 public class MemberController {
@@ -46,17 +47,19 @@ public class MemberController {
     // longinForm에서 입력한 정보를 받아 로그인 성패여부 결정.
     @PostMapping(value = "/project/tryLogin")
     public String tryLogin(Member member) {
-        Member tmp = memberService.memberName(member.getName());
-        if(tmp == null) {
-            return "redirect:/project/login";
-        }
-        else if (tmp.getName().equals(member.getName())) {
-            // 아직 페이지 안만듦. 로그인 성공시 글 목록으로 이동.
-            return "redirect:/";
-        }
-        else {
-            return "redirect:/project/login";
-        }
+        Optional<Member> tmp = memberService.memberName(member.getName());
 
+        if(tmp.isEmpty()) { // 입력한 멤버가 없을 경우
+            return "redirect:/project/login";
+        }
+        else { // 입력한 멤버가 있을 경우
+            Member get_member = tmp.get();
+            if (member.getPw().equals(get_member.getPw())) { // 비밀번호 맞을 경우
+                return "redirect:/";
+            }
+            else { // 비밀번호 틀린 경우
+                return "project/joinError";
+            }
+        }
     }
 }
