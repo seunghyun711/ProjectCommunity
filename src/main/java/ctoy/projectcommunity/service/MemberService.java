@@ -13,7 +13,6 @@ import java.util.Optional;
 @Transactional
 public class MemberService {
 
-    @Autowired
     private final MemberRepository memberRepository;
 
     public MemberService(MemberRepository memberRepository) {
@@ -38,11 +37,11 @@ public class MemberService {
     // 회원 아이디로 불러오기
     public Optional<Member> memberName(String name) {
         return memberRepository.findByName(name);
- //       return memberRepository.findByName(name).get();
+        //       return memberRepository.findByName(name).get();
     }
 
     // 회원 삭제
 //    public void memberDelete(Long id){
 //        memberRepository.deleteById(id);
- //   }
+    //   }
 }
