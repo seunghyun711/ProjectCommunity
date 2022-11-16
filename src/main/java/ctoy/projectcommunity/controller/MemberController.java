@@ -30,11 +30,7 @@ public class MemberController {
 
     @PostMapping(value = "/project/join")
     @ResponseBody
-    public String finishJoin(@RequestBody MemberForm form) {
-        Member member = new Member();
-        member.setName(form.getName());
-        member.setPw(form.getPw());
-        member.setEmail(form.getEmail());
+    public String finishJoin(@RequestBody Member member) {
         // 회원가입 시 중복된 아이디가 발생하면 예외처리 한다.
         try{
             memberService.write(member);
@@ -66,8 +62,8 @@ public class MemberController {
     // longinForm에서 입력한 정보를 받아 로그인 성패여부 결정.
     @PostMapping(value = "/project/login")
     @ResponseBody
-    public String tryLogin(@RequestBody MemberForm form) {
-        Optional<Member> tmp = memberService.memberName(form.getName());
+    public String tryLogin(@RequestBody Member inputMember) {
+        Optional<Member> tmp = memberService.memberName(inputMember.getName());
 
         if(tmp.isEmpty()) { // 입력한 멤버가 없을 경우
             JsonObject res = new JsonObject();
@@ -76,9 +72,12 @@ public class MemberController {
         }
         else { // 입력한 멤버가 있을 경우
             Member get_member = tmp.get();
-            if (form.getPw().equals(get_member.getPw())) { // 비밀번호 맞을 경우
+            if (inputMember.getPw().equals(get_member.getPw())) { // 비밀번호 맞을 경우 -> 로그인 성공
                 JsonObject res = new JsonObject();
                 res.addProperty("login_status", "login success");
+                res.addProperty("member_id", get_member.getId());
+                res.addProperty("member_name", get_member.getName());
+                res.addProperty("member_email", get_member.getEmail());
                 return res.toString();
             }
             else { // 비밀번호 틀린 경우
