@@ -1,10 +1,8 @@
 package ctoy.projectcommunity.domain;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Member {
@@ -38,4 +36,7 @@ public class Member {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @OneToMany(mappedBy = "member")
+    private List<Post> posts = new ArrayList<>();
 }
