@@ -4,12 +4,15 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "post")
 public class Post {
     @Id @GeneratedValue
-    private Long num;
-
     private Long post_id;
+
+//    @ManyToOne(cascade = CascadeType.PERSIST)
+//    @JoinColumn(name="create_member_id")
+//    private Member createMember;
+
+    private Long create_member_id;
 
     private String title; // 게시글 제목
 
@@ -18,10 +21,6 @@ public class Post {
 //    private LocalDateTime postDate; // 게시한 시간
 
     // 게시글
-    @ManyToOne
-    @JoinColumn
-    private Member member;
-
     public String getTitle() {
         return title;
     }
@@ -38,15 +37,24 @@ public class Post {
         this.content = content;
     }
 
-    public Member getMember() {
-        return member;
+    public Long getCreate_member_id() {
+        return create_member_id;
     }
 
-    public void setMember(Member member) {
-        this.member = member;
+    public void setCreate_member_id(Long create_member_id) {
+        this.create_member_id = create_member_id;
     }
 
-//    public LocalDateTime getPostDate() {
+    //    public Member getCreateMember() {
+//        return createMember;
+//    }
+//
+//    public void setCreateMember(Member createMember) {
+//        this.createMember = createMember;
+//    }
+
+
+    //    public LocalDateTime getPostDate() {
 //        return postDate;
 //    }
 }

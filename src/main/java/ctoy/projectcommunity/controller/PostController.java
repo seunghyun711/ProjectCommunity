@@ -26,17 +26,16 @@ public class PostController {
     @PostMapping(value = "project/write")
     @ResponseBody
     public String writePost(@RequestBody Post post) {
-        Post createPost = new Post();
-        createPost.setTitle(post.getTitle());
-        createPost.setContent(post.getContent());
 
+        System.out.println(post.getTitle());
+        System.out.println(post.getContent());
         try {
             postService.writePost(post);
         } catch (Exception e) {
             e.printStackTrace();
             JsonObject res = new JsonObject();
             res.addProperty("post_status", "error");
-            return  res.toString();
+            return res.toString();
         }
         JsonObject res = new JsonObject();
         res.addProperty("post_status","success");

@@ -1,9 +1,12 @@
 package ctoy.projectcommunity.controller;
 
 public class MemberForm {
+
     private String name;
     private String pw;
     private String email;
+
+    private String member_status;
 
     public String getName() {
         return name;
@@ -27,5 +30,13 @@ public class MemberForm {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getMember_status() {
+        return member_status;
+    }
+
+    public void setMember_status(String member_status) {
+        this.member_status = member_status;
     }
 }
