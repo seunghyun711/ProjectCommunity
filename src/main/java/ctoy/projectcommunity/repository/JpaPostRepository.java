@@ -9,7 +9,7 @@ import javax.persistence.NoResultException;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+
 public class JpaPostRepository implements PostRepository{
 
     private final EntityManager em;
