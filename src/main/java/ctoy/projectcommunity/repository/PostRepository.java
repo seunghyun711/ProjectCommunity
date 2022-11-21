@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface PostRepository {
     Post savePost(Post post);
 
-//    Optional<Member> findById(Long id);
+    Optional<Post> findById(Long id);
     Optional<Post> findByTitle(String title);
     List<Post> findAllPosts();
 

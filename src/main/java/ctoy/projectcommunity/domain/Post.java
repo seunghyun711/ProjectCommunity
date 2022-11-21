@@ -18,6 +18,8 @@ public class Post {
 
     private String content; // 게시글 내용
 
+    private String applicationURL; // 신청서 URL
+
 //    private LocalDateTime postDate; // 게시한 시간
 
     // 게시글
@@ -43,6 +45,14 @@ public class Post {
 
     public void setCreate_member_id(Long create_member_id) {
         this.create_member_id = create_member_id;
+    }
+
+    public String getApplicationURL() {
+        return applicationURL;
+    }
+
+    public void setApplicationURL(String applicationURL) {
+        this.applicationURL = applicationURL;
     }
 
     //    public Member getCreateMember() {

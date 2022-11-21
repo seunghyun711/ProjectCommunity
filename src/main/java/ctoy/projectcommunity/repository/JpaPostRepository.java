@@ -24,6 +24,12 @@ public class JpaPostRepository implements PostRepository{
         return post;
     }
 
+    @Override
+    public Optional<Post> findById(Long id) {
+        Post post = em.find(Post.class, id);
+        return Optional.ofNullable(post);
+    }
+
 //    @Override
 //    public Optional<Member> findById(Long id) {
 //        Member member = em.find(Member.class, id);

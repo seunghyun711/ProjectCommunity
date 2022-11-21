@@ -6,9 +6,7 @@ import ctoy.projectcommunity.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -39,6 +37,27 @@ public class PostController {
         }
         JsonObject res = new JsonObject();
         res.addProperty("post_status","success");
+        return res.toString();
+    }
+
+    // 게시글 수정
+    @PutMapping("/project/write/modify/{post_id}")
+    @ResponseBody
+    public String postUpdate(@PathVariable("post_id") Long id, @RequestBody Post post) {
+        Post postTmp = postService.findPost(id);
+        postTmp.setTitle(post.getTitle());
+        postTmp.setContent(post.getContent());
+        postTmp.setApplicationURL(post.getApplicationURL());
+
+        try {
+            postService.writePost(postTmp);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JsonObject res = new JsonObject();
+            res.addProperty("post_update", "error");
+        }
+        JsonObject res = new JsonObject();
+        res.addProperty("post_update","success");
         return res.toString();
     }
 }

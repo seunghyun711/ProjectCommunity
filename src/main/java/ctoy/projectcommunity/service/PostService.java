@@ -20,6 +20,11 @@ public class PostService {
         postRepository.savePost(post);
     }
 
+    // 특정 게시글 불러오기
+    public Post findPost(Long id) {
+        return postRepository.findById(id).get();
+    }
+
     // 게시글 제목으로 불러오기
     public Optional<Post> postTitle(String title) {
         return postRepository.findByTitle(title);
