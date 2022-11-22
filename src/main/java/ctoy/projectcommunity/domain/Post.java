@@ -20,6 +20,11 @@ public class Post {
 
 //    private LocalDateTime postDate; // 게시한 시간
 
+
+    public Long getPost_id() {
+        return post_id;
+    }
+
     // 게시글
     public String getTitle() {
         return title;

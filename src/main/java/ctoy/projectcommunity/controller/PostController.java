@@ -57,7 +57,6 @@ public class PostController {
         }
         JsonObject res = new JsonObject();
         res.addProperty("post_update","success");
-        res.addProperty("post_update","success");
         res.addProperty("post_id", postTmp.getPost_id());
         res.addProperty("post_title", postTmp.getTitle());
         res.addProperty("post_content",postTmp.getContent());
