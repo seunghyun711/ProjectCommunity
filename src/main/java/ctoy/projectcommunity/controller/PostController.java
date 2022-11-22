@@ -47,7 +47,6 @@ public class PostController {
         Post postTmp = postService.findPost(id);
         postTmp.setTitle(post.getTitle());
         postTmp.setContent(post.getContent());
-        postTmp.setApplicationURL(post.getApplicationURL());
 
         try {
             postService.writePost(postTmp);
