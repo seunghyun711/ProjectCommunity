@@ -30,12 +30,6 @@ public class JpaPostRepository implements PostRepository{
         return Optional.ofNullable(post);
     }
 
-//    @Override
-//    public Optional<Member> findById(Long id) {
-//        Member member = em.find(Member.class, id);
-//        return Optional.ofNullable(member);
-//    }
-
     @Override
     public Optional<Post> findByTitle(String title) {
         try {

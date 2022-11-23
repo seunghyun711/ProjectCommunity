@@ -21,6 +21,7 @@ public class PostController {
     }
 
     // 게시글 작성
+    // 게시글 작성
     @PostMapping(value = "project/write")
     @ResponseBody
     public String writePost(@RequestBody Post post) {
@@ -57,9 +58,6 @@ public class PostController {
         }
         JsonObject res = new JsonObject();
         res.addProperty("post_update","success");
-        res.addProperty("post_id", postTmp.getPost_id());
-        res.addProperty("post_title", postTmp.getTitle());
-        res.addProperty("post_content",postTmp.getContent());
         return res.toString();
     }
 }
