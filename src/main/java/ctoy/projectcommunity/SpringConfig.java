@@ -1,9 +1,7 @@
 package ctoy.projectcommunity;
 
-import ctoy.projectcommunity.repository.JpaMemberRepository;
-import ctoy.projectcommunity.repository.JpaPostRepository;
-import ctoy.projectcommunity.repository.MemberRepository;
-import ctoy.projectcommunity.repository.PostRepository;
+import ctoy.projectcommunity.repository.*;
+import ctoy.projectcommunity.service.CommentService;
 import ctoy.projectcommunity.service.MemberService;
 import ctoy.projectcommunity.service.PostService;
 import org.springframework.context.annotation.Bean;
@@ -37,5 +35,15 @@ public class SpringConfig {
     @Bean
     public PostRepository postRepository() {
         return new JpaPostRepository(em);
+    }
+
+    @Bean
+    public CommentRepository commentRepository(){
+        return new JpaCommentRepository(em);
+    }
+
+    @Bean
+    public CommentService commentService(){
+        return new CommentService(commentRepository());
     }
 }
