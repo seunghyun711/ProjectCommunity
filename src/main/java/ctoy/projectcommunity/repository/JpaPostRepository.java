@@ -46,4 +46,16 @@ public class JpaPostRepository implements PostRepository{
         return em.createQuery("select m from Post m", Post.class)
                 .getResultList();
     }
+
+    @Override
+    public Optional<Post> deleteById(Long id) {
+        try {
+            Post findPost = em.find(Post.class, id); // 없으면 findPost는 null임.
+            em.remove(findPost);
+            return Optional.ofNullable(findPost);
+        } catch (Exception e) {
+            return Optional.ofNullable(null);
+        }
+    }
+
 }

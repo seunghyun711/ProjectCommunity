@@ -60,4 +60,34 @@ public class PostController {
         res.addProperty("post_update","success");
         return res.toString();
     }
+
+
+    // 게시글 리스트 불러오기
+    @GetMapping(value="project/getPostList")
+    @ResponseBody
+    public Object getPostList() {
+        try {
+            return postService.getPosts();
+        } catch (Exception e) {
+            JsonObject res = new JsonObject();
+            res.addProperty("get_postList_status","error");
+            return res.toString();
+        }
+    }
+
+    // 게시글 삭제
+    @DeleteMapping(value="project/deletePost/{deletePostId}")
+    @ResponseBody
+    public String deletePost(@PathVariable("deletePostId") Long deletePostId) {
+        Optional<Post> result = postService.deletePost(deletePostId);
+        JsonObject res = new JsonObject();
+        if(result.isEmpty()) {
+            res.addProperty("delete_post_status","error");
+        }
+        else {
+            res.addProperty("delete_post_status", "success");
+        }
+        return res.toString();
+    }
+
 }
