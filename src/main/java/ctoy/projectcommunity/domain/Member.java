@@ -11,8 +11,6 @@ public class Member {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name; // 로그인 시 사용되는 id
-
-    @Column(name = "password")
     private String pw; // 사용자 비밀번호
     private String email; // 사용자 이메일
 
