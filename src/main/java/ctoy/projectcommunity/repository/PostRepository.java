@@ -12,7 +12,7 @@ public interface PostRepository {
     Post savePost(Post post);
 
     Optional<Post> findById(Long id);
-    Optional<Post> findByTitle(String title);
+    List<Post> findByTitle(String title);
     List<Post> findAllPosts();
     Optional<Post> deleteById(Long id);
 

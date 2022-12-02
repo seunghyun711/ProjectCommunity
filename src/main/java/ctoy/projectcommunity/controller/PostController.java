@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -88,6 +89,20 @@ public class PostController {
             res.addProperty("delete_post_status", "success");
         }
         return res.toString();
+    }
+
+    // 게시글 검색(게시글 제목 기준으로 검색)
+    @GetMapping(value = "project/post/search/{title}")
+    @ResponseBody
+    public Object searchPost(@PathVariable("title") String postTitle) {
+        List<Post> postTmp = postService.postTitle(postTitle);
+        if (postTmp.isEmpty()) {
+            JsonObject res = new JsonObject();
+            res.addProperty("search_post_status","not exist");
+            return res.toString();
+        }else{
+            return postTmp;
+        }
     }
 
 }

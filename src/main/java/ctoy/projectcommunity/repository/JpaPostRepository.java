@@ -31,15 +31,16 @@ public class JpaPostRepository implements PostRepository{
     }
 
     @Override
-    public Optional<Post> findByTitle(String title) {
+    public List<Post> findByTitle(String title) {
         try {
-            Post post = em.createQuery("select m from Post m where m.title = :title", Post.class)
-                    .setParameter("title", title).getSingleResult();
-            return Optional.ofNullable(post);
+            List<Post> post = em.createQuery("select m from Post m where m.title LIKE concat('%',:title,'%')", Post.class)
+                    .setParameter("title", title).getResultList();
+            return post;
         } catch (NoResultException e) {
-            return Optional.ofNullable(null);
+            return null;
         }
     }
+
 
     @Override
     public List<Post> findAllPosts() {
