@@ -27,8 +27,9 @@ public class CommentController {
     // 댓글 작성
     @PostMapping(value = "project/comment/write/{post_id}")
     @ResponseBody
-    public String writeComment(@PathVariable("post_id") Long id, @RequestBody Comment comment) {
+    public String writeComment(@PathVariable("post_id") Long postId, @RequestBody Comment comment) {
 
+        comment.setComment_post_id(postId);
         try {
             commentService.writeComment(comment);
         } catch (Exception e) {
