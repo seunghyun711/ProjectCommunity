@@ -54,16 +54,26 @@ public class CommentController {
         }else{
             return commentsTmp;
         }
+    }
 
-//        try {
-//            return commentsTmp;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//
-//            JsonObject res = new JsonObject();
-//            res.addProperty("commentList_status", "error");
-//            return res.toString();
-//        }
+    // 댓글 수정
+    @PostMapping(value = "project/comment/update/{comment_id}")
+    @ResponseBody
+    public String commentUpdate(@PathVariable("comment_id") Long id, @RequestBody Comment comment) {
+        Comment commentTmp = commentService.findComment(id);
+        commentTmp.setComment(comment.getComment());
+
+        try {
+            commentService.writeComment(commentTmp);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JsonObject res = new JsonObject();
+            res.addProperty("comment_update_status","error");
+            return res.toString();
+        }
+        JsonObject res = new JsonObject();
+        res.addProperty("comment_update_status","success");
+        return res.toString();
     }
 }
 
