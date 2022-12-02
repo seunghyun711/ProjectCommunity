@@ -4,10 +4,10 @@ import com.google.gson.JsonObject;
 import ctoy.projectcommunity.domain.Post;
 import ctoy.projectcommunity.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -46,6 +46,12 @@ public class PostController {
     @ResponseBody
     public String postUpdate(@PathVariable("post_id") Long id, @RequestBody Post post) {
         Post postTmp = postService.findPost(id);
+        if(postTmp == null) {
+            JsonObject res = new JsonObject();
+            res.addProperty("post_update", "error");
+            return res.toString();
+        }
+
         postTmp.setTitle(post.getTitle());
         postTmp.setContent(post.getContent());
 
@@ -88,6 +94,21 @@ public class PostController {
             res.addProperty("delete_post_status", "success");
         }
         return res.toString();
+    }
+
+    // 내가 쓴 글 목록
+    @GetMapping(value = "project/getMembersPostList/{member_id}")
+    @ResponseBody
+    public Object getMembersPostList(@PathVariable("member_id") Long member_id) {
+        try {
+            List<Post> res = postService.getMembersPosts(member_id);
+            return res;
+        } catch (Exception e) {
+            // 리스트 불러오는 중 오류 발생 시
+            JsonObject res = new JsonObject();
+            res.addProperty("get_MembersPostList_status","error");
+            return res.toString();
+        }
     }
 
 }

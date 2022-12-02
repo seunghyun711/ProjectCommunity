@@ -58,4 +58,11 @@ public class JpaPostRepository implements PostRepository{
         }
     }
 
+    @Override
+    public List<Post> findByMemberId(Long memberId) {
+        return em.createQuery("select m from Post m where m.create_member_id = :member_id", Post.class)
+                .setParameter("member_id", memberId)
+                .getResultList();
+    }
+
 }

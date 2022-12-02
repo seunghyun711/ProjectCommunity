@@ -41,4 +41,9 @@ public class PostService {
         return postRepository.deleteById(postId);
     }
 
+    // 특정 memberId의 게시글 목록 불러오기
+    public List<Post> getMembersPosts(Long memberId) {
+        return postRepository.findByMemberId(memberId);
+    }
+
 }
