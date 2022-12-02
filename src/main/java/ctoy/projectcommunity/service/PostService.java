@@ -27,7 +27,7 @@ public class PostService {
     }
 
     // 게시글 제목으로 불러오기
-    public Optional<Post> postTitle(String title) {
+    public List<Post> postTitle(String title) {
         return postRepository.findByTitle(title);
     }
 

@@ -23,4 +23,9 @@ public class CommentService {
     public List<Comment> commentList(Long id) {
         return commentRepository.findCommentsListById(id);
     }
+
+    // 특정 댓글 불러오기
+    public Comment findComment(Long id) {
+        return commentRepository.findById(id).get();
+    }
 }
