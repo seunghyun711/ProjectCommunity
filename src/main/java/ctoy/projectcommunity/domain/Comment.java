@@ -18,6 +18,10 @@ public class Comment {
 
     private String comment; // 댓글 내용
 
+    public Long getComment_id() {
+        return comment_id;
+    }
+
     public void setComment_post_id(Long comment_post_id) {
         this.comment_post_id = comment_post_id;
     }
