@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Controller
@@ -69,20 +71,27 @@ public class PostController {
 
 
     // 게시글 리스트 불러오기
-    @GetMapping(value="project/getPostList")
+    @GetMapping(value="project/post/getAllPostList")
     @ResponseBody
     public Object getPostList() {
+        List<PostForm> resList = new ArrayList<>();
         try {
-            return postService.getPosts();
+            List<Post> allPostList = postService.getPosts();
+            for(Post p:allPostList) {
+                resList.add(new PostForm(p.getPost_id(), p.getCreate_member_id(), p.getTitle()));
+            }
+            return resList;
         } catch (Exception e) {
+            // 리스트 불러오는 중 오류 발생 시
+            e.printStackTrace();
             JsonObject res = new JsonObject();
-            res.addProperty("get_postList_status","error");
+            res.addProperty("get_AllPostList_status","error");
             return res.toString();
         }
     }
 
     // 게시글 삭제
-    @DeleteMapping(value="project/deletePost/{deletePostId}")
+    @DeleteMapping(value="project/post/deletePost/{deletePostId}")
     @ResponseBody
     public String deletePost(@PathVariable("deletePostId") Long deletePostId) {
         Optional<Post> result = postService.deletePost(deletePostId);
@@ -97,19 +106,25 @@ public class PostController {
     }
 
     // 내가 쓴 글 목록
-    @GetMapping(value = "project/getMembersPostList/{member_id}")
+    @GetMapping(value = "project/post/getMembersPostList/{member_id}")
     @ResponseBody
     public Object getMembersPostList(@PathVariable("member_id") Long member_id) {
+        List<PostForm> resList = new ArrayList<>();
         try {
-            List<Post> res = postService.getMembersPosts(member_id);
-            return res;
+            List<Post> membersPostList = postService.getMembersPosts(member_id);
+            for(Post p:membersPostList) {
+                resList.add(new PostForm(p.getPost_id(), p.getCreate_member_id(), p.getTitle()));
+            }
+            return resList;
         } catch (Exception e) {
             // 리스트 불러오는 중 오류 발생 시
+            e.printStackTrace();
             JsonObject res = new JsonObject();
             res.addProperty("get_MembersPostList_status","error");
             return res.toString();
         }
     }
+
 
     // 게시글 검색(게시글 제목 기준으로 검색)
     @GetMapping(value = "project/post/search/{title}")
@@ -125,4 +140,46 @@ public class PostController {
         }
     }
 
+    // 게시글 상세정보
+    @GetMapping(value = "project/post/getPostDetail/{post_id}")
+    @ResponseBody
+    public Object getPostDetail(@PathVariable("post_id") Long postId) {
+        try {
+            Post resPost = postService.findPost(postId);
+            return resPost;
+        } catch (NoSuchElementException nee) {
+            JsonObject res = new JsonObject();
+            res.addProperty("get_post_detail_status","post not exist");
+            return res.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            JsonObject res = new JsonObject();
+            res.addProperty("get_post_detail_status","error");
+            return res.toString();
+        }
+    }
+
+    static class PostForm {
+        Long post_id;
+        Long create_member_id;
+        String title;
+
+        public PostForm(Long post_id, Long create_member_id, String title) {
+            this.post_id = post_id;
+            this.create_member_id = create_member_id;
+            this.title = title;
+        }
+
+        public Long getPost_id() {
+            return post_id;
+        }
+
+        public Long getCreate_member_id() {
+            return create_member_id;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+    }
 }
