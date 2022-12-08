@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class CommentController {
@@ -76,5 +77,21 @@ public class CommentController {
         res.addProperty("comment_update_status","success");
         return res.toString();
     }
+
+    // 댓글 삭제
+    @DeleteMapping(value = "project/comment/delete/{comment_id}")
+    @ResponseBody
+    public String deleteComment(@PathVariable("comment_id") Long comment_id) {
+        Optional<Comment> result = commentService.deleteComment(comment_id);
+        JsonObject res = new JsonObject();
+        if (result.isEmpty()) {
+            res.addProperty("delete_comment_status", "error");
+        } else {
+            res.addProperty("delete_comment_status","success");
+        }
+        return res.toString();
+    }
+
+
 }
 

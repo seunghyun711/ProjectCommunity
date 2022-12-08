@@ -5,6 +5,7 @@ import ctoy.projectcommunity.repository.CommentRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 public class CommentService {
@@ -28,4 +29,10 @@ public class CommentService {
     public Comment findComment(Long id) {
         return commentRepository.findById(id).get();
     }
+
+    // 특정 id의 댓글 삭제
+    public Optional<Comment> deleteComment(Long commentId) {
+        return commentRepository.deleteByCommentId(commentId);
+    }
+
 }

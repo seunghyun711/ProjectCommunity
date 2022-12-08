@@ -1,6 +1,7 @@
 package ctoy.projectcommunity.repository;
 
 import ctoy.projectcommunity.domain.Comment;
+import ctoy.projectcommunity.domain.Post;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -31,4 +32,16 @@ public class JpaCommentRepository implements CommentRepository{
         return em.createQuery("select m from Comment m where m.comment_post_id = :id", Comment.class)
                 .setParameter("id",post_id).getResultList();
     }
+
+    @Override
+    public Optional<Comment> deleteByCommentId(Long id){
+        try {
+            Comment findComment = em.find(Comment.class, id); // 없으면 findPost는 null임.
+            em.remove(findComment);
+            return Optional.ofNullable(findComment);
+        } catch (Exception e) {
+            return Optional.ofNullable(null);
+        }
+    }
+
 }

@@ -11,4 +11,7 @@ public interface CommentRepository {
     Optional<Comment> findById(Long id);
 
     List<Comment> findCommentsListById(Long id);
+
+    Optional<Comment> deleteByCommentId(Long id);
+
 }
