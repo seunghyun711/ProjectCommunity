@@ -26,6 +26,7 @@ public class PostService {
         return postRepository.findById(id).get();
     }
 
+
     // 게시글 제목으로 불러오기
     public List<Post> postTitle(String title) {
         return postRepository.findByTitle(title);
@@ -34,6 +35,11 @@ public class PostService {
     // 전체 게시글을 리스트로 반환
     public List<Post> getPosts() {
         return postRepository.findAllPosts();
+    }
+
+    // 페이지 정보를 받아 게시글 반환
+    public List<Post> getPostsByPage(int page, int limit) {
+        return postRepository.findByPage(page, limit);
     }
 
     // 특정 id의 게시글 삭제

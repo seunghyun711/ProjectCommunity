@@ -19,5 +19,6 @@ public interface PostRepository {
 
     List<Post> findAllPosts();
     Optional<Post> deleteById(Long id);
+    List<Post> findByPage(int page, int limit);
 
 }

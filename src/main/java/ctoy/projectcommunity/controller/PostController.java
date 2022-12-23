@@ -70,17 +70,17 @@ public class PostController {
     }
 
 
-    // 게시글 리스트 불러오기
-    @GetMapping(value="project/post/getAllPostList")
+    // 페이지 정보 받아서 게시글 리스트 불러오기
+    @GetMapping(value="project/post/posts_with_page")
     @ResponseBody
-    public Object getPostList() {
-        List<PostForm> resList = new ArrayList<>();
+    public Object getPostListWithPage(@RequestParam("page") int page, @RequestParam("limit") int limit) {
+        List<PostForm> postformList = new ArrayList<>();
         try {
-            List<Post> allPostList = postService.getPosts();
-            for(Post p:allPostList) {
-                resList.add(new PostForm(p.getPost_id(), p.getCreate_member_id(), p.getTitle()));
+            List<Post> postList = postService.getPostsByPage(page, limit);
+            for(Post p:postList) {
+                postformList.add(new PostForm(p.getPost_id(), p.getCreate_member_id(), p.getTitle()));
             }
-            return resList;
+            return postformList;
         } catch (Exception e) {
             // 리스트 불러오는 중 오류 발생 시
             e.printStackTrace();

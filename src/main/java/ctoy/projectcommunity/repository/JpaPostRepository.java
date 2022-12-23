@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,4 +67,14 @@ public class JpaPostRepository implements PostRepository{
                 .getResultList();
     }
 
+    @Override
+    public List<Post> findByPage(int page, int limit) { // 1번 페이지 -> 1~10, 2번페이지 -> 11~17
+
+        int endPostNum = page * limit;
+        int startPostNum = endPostNum - limit + 1;
+        return em.createQuery("select m from Post m", Post.class)
+                .setFirstResult(startPostNum-1)
+                .setMaxResults(limit)
+                .getResultList();
+    }
 }
