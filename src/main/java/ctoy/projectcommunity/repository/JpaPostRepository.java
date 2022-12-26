@@ -72,7 +72,7 @@ public class JpaPostRepository implements PostRepository{
 
         int endPostNum = page * limit;
         int startPostNum = endPostNum - limit + 1;
-        return em.createQuery("select m from Post m", Post.class)
+        return em.createQuery("select m from Post m order by m.post_id desc", Post.class)
                 .setFirstResult(startPostNum-1)
                 .setMaxResults(limit)
                 .getResultList();
